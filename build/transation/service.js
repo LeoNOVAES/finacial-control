@@ -10,11 +10,17 @@ var TypeTransaction;
     TypeTransaction[TypeTransaction["OUTPUT"] = 0] = "OUTPUT";
     TypeTransaction[TypeTransaction["INPUT"] = 1] = "INPUT";
 })(TypeTransaction || (TypeTransaction = {}));
+var Providers = [
+    "n26",
+    "curve",
+    "moey"
+];
 var TransactionService = /** @class */ (function () {
     function TransactionService() {
     }
     TransactionService.prototype.saveTransaction = function (data) {
-        service_1.default.sendMessage(data);
+        var transaction = this.buildTransactionData(data);
+        service_1.default.sendMessage(JSON.stringify(transaction));
     };
     TransactionService.prototype.buildTransactionData = function (notification) {
         var transaction = {
@@ -23,6 +29,8 @@ var TransactionService = /** @class */ (function () {
             type: TypeTransaction.INPUT
         };
         return transaction;
+    };
+    TransactionService.prototype.transactionMapper = function (data) {
     };
     return TransactionService;
 }());

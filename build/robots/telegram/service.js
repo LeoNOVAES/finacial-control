@@ -12,7 +12,7 @@ var TelegramService = /** @class */ (function () {
         var bot = new node_telegram_bot_api_1.default(TOKEN, { polling: true });
         bot.on('message', function (msg) {
             var chatId = msg.chat.id;
-            bot.sendMessage(chatId, 'Received your message' + data);
+            bot.sendMessage(chatId, 'Received your message' + JSON.stringify(data));
         });
     };
     return TelegramService;
