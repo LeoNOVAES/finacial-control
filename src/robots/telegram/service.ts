@@ -1,14 +1,23 @@
 import TelegramBot from 'node-telegram-bot-api';
+import { Notification } from '../../interfaces';
 
 const TOKEN = '5115885268:AAFtZrtEr5jw6a0f2263yXs8VrMyXJ29xQE';
 
 class TelegramService {
-    public sendMessage(data: string): any{
+    public sendMessage(template: string): void {
         const bot = new TelegramBot(TOKEN, {polling: true});
-        bot.on('message', (msg: any) => {
-            const chatId = msg.chat.id;
-            bot.sendMessage(chatId, 'Received your message' + JSON.stringify(data));
+        const idsChat = this.getIdChat();
+
+        idsChat.map((id) => {
+            bot.sendMessage(
+                id, 
+                template
+            );
         });
+    }
+
+    private getIdChat() {
+        return [-777295501]
     }
 }
 

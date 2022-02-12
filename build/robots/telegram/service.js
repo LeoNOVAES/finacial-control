@@ -8,12 +8,15 @@ var TOKEN = '5115885268:AAFtZrtEr5jw6a0f2263yXs8VrMyXJ29xQE';
 var TelegramService = /** @class */ (function () {
     function TelegramService() {
     }
-    TelegramService.prototype.sendMessage = function (data) {
+    TelegramService.prototype.sendMessage = function (template) {
         var bot = new node_telegram_bot_api_1.default(TOKEN, { polling: true });
-        bot.on('message', function (msg) {
-            var chatId = msg.chat.id;
-            bot.sendMessage(chatId, 'Received your message' + JSON.stringify(data));
+        var idsChat = this.getIdChat();
+        idsChat.map(function (id) {
+            bot.sendMessage(id, template);
         });
+    };
+    TelegramService.prototype.getIdChat = function () {
+        return [-777295501];
     };
     return TelegramService;
 }());

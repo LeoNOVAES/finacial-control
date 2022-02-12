@@ -1,41 +1,29 @@
+import { Console } from 'console';
+import { Notification, Transaction, TypeTransaction } from '../interfaces';
 import TelegramService from '../robots/telegram/service';
-
-interface Transaction {
-    source: string,
-    value: number,
-    type: TypeTransaction
-}
-
-interface Notification {
-    message: string
-}
-
-enum TypeTransaction {
-    OUTPUT,
-    INPUT
-}
-
-const Providers = [
-    "n26",
-    "curve",
-    "moey"
-]
+import { TransactionMapper } from './mapper';
 
 export class TransactionService {
-
-    saveTransaction(data: any) {
-        const transaction: Transaction = this.buildTransactionData(data);
-        TelegramService.sendMessage(JSON.stringify(transaction));
-        
+    saveTransaction(data: Notification) {
+        const mapper = new TransactionMapper(data.application).build();
+        const transaction: Transaction = mapper.map(data);
+        const template = this.buildTemplateToTelegram(transaction);
+        TelegramService.sendMessage(template);
+        return transaction;
     }
 
-    private buildTransactionData (notification: Notification): Transaction {
-        const transaction: Transaction = {
-            source: '',
-            value: 1,
-            type: TypeTransaction.INPUT
-        };
-
-        return transaction;
+    buildTemplateToTelegram(data: Transaction) {
+        let summary = '';
+        let conclusion = '';
+    
+        if(data.type === TypeTransaction.OUTPUT) {
+            summary = 'Voce gastou';
+            conclusion = '\n\n Se voce nao gastar o desconto é maior!!!! 😠'
+        } else {
+            summary = 'Voce recebeu';
+            conclusion = '\n\n Veja bem meu garoto!!!! 🤯'
+        }
+    
+        return `${summary} $${data.value} no local ${data.source} com o cartao ${data.provider} \n ${conclusion}`
     }
 }

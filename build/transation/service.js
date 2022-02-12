@@ -4,33 +4,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransactionService = void 0;
+var interfaces_1 = require("../interfaces");
 var service_1 = __importDefault(require("../robots/telegram/service"));
-var TypeTransaction;
-(function (TypeTransaction) {
-    TypeTransaction[TypeTransaction["OUTPUT"] = 0] = "OUTPUT";
-    TypeTransaction[TypeTransaction["INPUT"] = 1] = "INPUT";
-})(TypeTransaction || (TypeTransaction = {}));
-var Providers = [
-    "n26",
-    "curve",
-    "moey"
-];
+var mapper_1 = require("./mapper");
 var TransactionService = /** @class */ (function () {
     function TransactionService() {
     }
     TransactionService.prototype.saveTransaction = function (data) {
-        var transaction = this.buildTransactionData(data);
-        service_1.default.sendMessage(JSON.stringify(transaction));
-    };
-    TransactionService.prototype.buildTransactionData = function (notification) {
-        var transaction = {
-            source: '',
-            value: 1,
-            type: TypeTransaction.INPUT
-        };
+        var mapper = new mapper_1.TransactionMapper(data.application).build();
+        var transaction = mapper.map(data);
+        var template = this.buildTemplateToTelegram(transaction);
+        service_1.default.sendMessage(template);
         return transaction;
     };
-    TransactionService.prototype.transactionMapper = function (data) {
+    TransactionService.prototype.buildTemplateToTelegram = function (data) {
+        var summary = '';
+        var conclusion = '';
+        if (data.type === interfaces_1.TypeTransaction.OUTPUT) {
+            summary = 'Voce gastou';
+            conclusion = '\n\n Se voce nao gastar o desconto é maior!!!! 😠';
+        }
+        else {
+            summary = 'Voce recebeu';
+            conclusion = '\n\n Veja bem meu garoto!!!! 🤯';
+        }
+        return "".concat(summary, " $").concat(data.value, " no local ").concat(data.source, " com o cartao ").concat(data.provider, " \n ").concat(conclusion);
     };
     return TransactionService;
 }());
