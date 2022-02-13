@@ -1,4 +1,3 @@
-import { Console } from 'console';
 import { Notification, Transaction, TypeTransaction } from '../interfaces';
 import TelegramService from '../robots/telegram/service';
 import { TransactionMapper } from './mapper';
@@ -21,7 +20,7 @@ export class TransactionService {
             conclusion = '\n\n Se voce nao gastar o desconto é maior!!!! 😠'
         } else {
             summary = 'Voce recebeu';
-            conclusion = '\n\n Veja bem meu garoto!!!! 🤯'
+            conclusion = '\n\n Cuide bem do seu dinheiro!!!! 🤑'
         }
     
         return `${summary} $${data.value} no local ${data.source} com o cartao ${data.provider} \n ${conclusion}`

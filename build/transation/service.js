@@ -26,7 +26,7 @@ var TransactionService = /** @class */ (function () {
         }
         else {
             summary = 'Voce recebeu';
-            conclusion = '\n\n Veja bem meu garoto!!!! 🤯';
+            conclusion = '\n\n Cuide bem do seu dinheiro!!!! 🤑';
         }
         return "".concat(summary, " $").concat(data.value, " no local ").concat(data.source, " com o cartao ").concat(data.provider, " \n ").concat(conclusion);
     };

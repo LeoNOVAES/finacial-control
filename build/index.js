@@ -11,5 +11,6 @@ app.use(routes_1.default);
 app.get('/healthcheck', function (req, res) {
     res.send('everything ok');
 });
+// mongoose.connect('mongodb+srv://leandronovaes:53Gst52nybl0qhHy@cluster0.xj0qd.mongodb.net/financial-control?retryWrites=true&w=majority', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
 var PORT = 3333;
-app.listen(PORT, function () { return console.log("App listening on PORT ".concat(PORT)); });
+app.listen(PORT || process.env.PORT, function () { return console.log("App listening on PORT ".concat(PORT)); });
