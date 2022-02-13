@@ -1,16 +1,17 @@
+import config from "./config/config"
 import express from "express";
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import TransactionRoutes from './transation/routes'
 
 const app = express();
 app.use(express.json());
 app.use(TransactionRoutes);
+
 app.get('/healthcheck', (req, res) => {
     res.send('everything ok');
 });
 
-// mongoose.connect('mongodb+srv://leandronovaes:53Gst52nybl0qhHy@cluster0.xj0qd.mongodb.net/financial-control?retryWrites=true&w=majority', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
-
+mongoose.connect(config.MONGO_URL);
 
 const PORT = 3333;
 

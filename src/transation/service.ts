@@ -1,11 +1,14 @@
 import { Notification, Transaction, TypeTransaction } from '../interfaces';
 import TelegramService from '../robots/telegram/service';
+import { TransactionModel } from './schema';
 import { TransactionMapper } from './mapper';
 
 export class TransactionService {
-    saveTransaction(data: Notification) {
+    async saveTransaction(data: Notification) {
         const mapper = new TransactionMapper(data.application).build();
-        const transaction: Transaction = mapper.map(data);
+        const test = mapper.map(data);
+        console.log(test)
+        const transaction: Transaction = await new TransactionModel(test).save();
         const template = this.buildTemplateToTelegram(transaction);
         TelegramService.sendMessage(template);
         return transaction;
