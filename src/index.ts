@@ -1,4 +1,4 @@
-import config from "./config/config"
+
 import express from "express";
 import mongoose from 'mongoose';
 import TransactionRoutes from './transation/routes'
@@ -11,7 +11,7 @@ app.get('/healthcheck', (req, res) => {
     res.send('everything ok');
 });
 
-mongoose.connect(config.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL || '');
 
 const PORT = 3333;
 

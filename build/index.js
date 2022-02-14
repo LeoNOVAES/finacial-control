@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var config_1 = __importDefault(require("./config/config"));
 var express_1 = __importDefault(require("express"));
 var mongoose_1 = __importDefault(require("mongoose"));
 var routes_1 = __importDefault(require("./transation/routes"));
@@ -13,6 +12,6 @@ app.use(routes_1.default);
 app.get('/healthcheck', function (req, res) {
     res.send('everything ok');
 });
-mongoose_1.default.connect(config_1.default.MONGO_URL);
+mongoose_1.default.connect(process.env.MONGO_URL || '');
 var PORT = 3333;
 app.listen(PORT || process.env.PORT, function () { return console.log("App listening on PORT ".concat(PORT)); });
