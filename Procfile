@@ -1,3 +1,3 @@
 web: npm install --global typescript
 web: npm install --save-dev typescript
-web: npm start
+web: node /build/index.js
