@@ -1,14 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",                          
-    "module": "commonjs",                    
-    "lib": ["es6"],                     
-    "allowJs": true,
-    "outDir": "app/build",                          
-    "rootDir": "src",
-    "strict": true,         
-    "noImplicitAny": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true
+
+    "outDir": "build",                          
+
   }
 }
